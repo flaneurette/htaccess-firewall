@@ -6,19 +6,37 @@ ServerSignature Off
 
 IndexIgnore *
 
-RewriteCond %{REQUEST_METHOD}  ^(HEAD|TRACE|DELETE|TRACK) [NC,OR]
-RewriteCond %{HTTP_REFERER}    ^(.*)(<|>|'|%0A|%0D|%27|%3C|%3E|%00).* [NC,OR]
-RewriteCond %{REQUEST_URI}     ^/(,|;|<|>|/{2,999}).* [NC,OR]
+# Block dangerous HTTP methods
+RewriteCond %{REQUEST_METHOD} ^(HEAD|TRACE|DELETE|TRACK) [NC]
+RewriteRule ^.* - [F,L]
+
+# Block suspicious user agents
 RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
-RewriteCond %{HTTP_USER_AGENT} ^(java|curl|wget).* [NC,OR]
-RewriteCond %{HTTP_USER_AGENT} ^.*(winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner).* [NC,OR]
-RewriteCond %{HTTP_USER_AGENT} ^.*(libwww|curl|wget|python|nikto|scan).* [NC,OR]
-RewriteCond %{HTTP_USER_AGENT} ^.*(<|>|'|%0A|%0D|%27|%3C|%3E|%00).* [NC,OR]
-RewriteCond %{HTTP_COOKIE}     ^.*(<|>|'|%0A|%0D|%27|%3C|%3E|%00).* [NC,OR]
-RewriteCond %{QUERY_STRING}    ^.*(;|'|").*(union|select|insert|declare|drop|update|md5|benchmark).* [NC,OR]
-RewriteCond %{QUERY_STRING}    ^.*(localhost|loopback|127\.0\.0\.1).* [NC,OR]
-RewriteCond %{QUERY_STRING}    ^.*\.[A-Za-z0-9].* [NC,OR] # prevents shell injection
+RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|l9tcpid|l9explore|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|curl|wget|python|nikto|scan|java) [NC]
+RewriteRule ^.* - [F,L]
 
-RewriteCond %{QUERY_STRING}    ^.*(<|>|'|%0A|%0D|%27|%3C|%3E|%00).* [NC]
+# Block malicious referers
+RewriteCond %{HTTP_REFERER} (<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
+RewriteRule ^.* - [F,L]
 
-RewriteRule ^(.*)$ index.php
+# Block suspicious cookies
+RewriteCond %{HTTP_COOKIE} (<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
+RewriteRule ^.* - [F,L]
+
+# Block suspicious request URIs
+RewriteCond %{REQUEST_URI} (,|;|<|>|/{2,}) [NC]
+RewriteRule ^.* - [F,L]
+
+# Block disovery of files
+RewriteCond %{REQUEST_URI} (\.git|\.env|\.aws|info\.php|dev\.php|shell\.php) [NC]
+RewriteRule ^.* - [F,L]
+
+# Block access to backup files and common dev artifacts
+RewriteCond %{REQUEST_URI} (\.bak|\.swp|\.old|\.orig|\.save|\.key) [NC]
+RewriteRule ^.* - [F,L]
+
+# Block SQLi and RFI/LFI in query strings
+RewriteCond %{QUERY_STRING} (union|select|insert|declare|drop|update|md5|benchmark|localhost|loopback|127\.0\.0\.1|<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
+RewriteRule ^.* - [F,L]
+
+
