@@ -37,6 +37,6 @@ RewriteRule ^.* - [F,L]
 
 # Block SQLi and RFI/LFI in query strings (uncomment for SQLi protection, might interfere with PhpMyAdmin, though)
 # RewriteCond %{QUERY_STRING} (union|select|insert|declare|drop|update|md5|benchmark|localhost|loopback|127\.0\.0\.1|<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
-RewriteRule ^.* - [F,L]
+# RewriteRule ^.* - [F,L]
 
 
