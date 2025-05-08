@@ -28,7 +28,7 @@ RewriteCond %{REQUEST_URI} (,|;|<|>|/{2,}) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block disovery of files
-RewriteCond %{REQUEST_URI} (\.git|\.svn|\.env|\.aws|info\.php|dev\.php|test\.php|phpinfo\.php|shell\.php|\.remote|\.sh|\.local|\.vscode|\.sftp|\.ftp) [NC]
+RewriteCond %{REQUEST_URI} (\.git|\.svn|\.env|\.aws|info\.php|dev\.php|test\.php|phpinfo\.php|shell\.php|eval-stdin\.php|\.remote|\.sh|\.local|\.vscode|\.sftp|\.ftp) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block access to backup files and common dev artifacts
