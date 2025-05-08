@@ -7,7 +7,7 @@ ServerSignature Off
 IndexIgnore *
 
 # Block dangerous HTTP methods
-RewriteCond %{REQUEST_METHOD} ^(HEAD|TRACE|DELETE|TRACK) [NC]
+RewriteCond %{REQUEST_METHOD} ^(TRACE|DELETE|TRACK) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block suspicious user agents
@@ -35,8 +35,8 @@ RewriteRule ^.* - [F,L]
 RewriteCond %{REQUEST_URI} (\.bak|\.swp|\.old|\.orig|\.save|\.key) [NC]
 RewriteRule ^.* - [F,L]
 
-# Block SQLi and RFI/LFI in query strings
-RewriteCond %{QUERY_STRING} (union|select|insert|declare|drop|update|md5|benchmark|localhost|loopback|127\.0\.0\.1|<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
+# Block SQLi and RFI/LFI in query strings (uncomment for SQLi protection, might interfere with PhpMyAdmin, though)
+# RewriteCond %{QUERY_STRING} (union|select|insert|declare|drop|update|md5|benchmark|localhost|loopback|127\.0\.0\.1|<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
 RewriteRule ^.* - [F,L]
 
 
