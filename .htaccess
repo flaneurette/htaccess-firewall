@@ -31,6 +31,10 @@ RewriteRule ^.* - [F,L]
 RewriteCond %{REQUEST_URI} (\.git|\.svn|\.env|\.aws|info\.php|dev\.php|test\.php|phpinfo\.php|shell\.php|eval-stdin\.php|\.remote|\.sh|\.local|\.vscode|\.sftp|\.ftp) [NC]
 RewriteRule ^.* - [F,L]
 
+# Block disovery of other files/dirs
+RewriteCond %{REQUEST_URI} "(phpinfo|_aws|/test|wp-admin|wp-login|/config|/vendor|/storage|composer\.json|/server-status|/phpmyadmin|/admin|/login)" [NC]
+RewriteRule ^.* - [F,L]
+
 # Block access to backup files and common dev artifacts
 RewriteCond %{REQUEST_URI} (\.bak|\.swp|\.old|\.orig|\.save|\.key) [NC]
 RewriteRule ^.* - [F,L]
