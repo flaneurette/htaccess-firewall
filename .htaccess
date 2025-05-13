@@ -12,7 +12,7 @@ RewriteRule ^.* - [F,L]
 
 # Block suspicious user agents
 RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
-RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|l9tcpid|l9explore|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|curl|wget|python|nikto|scan|java) [NC]
+RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|l9tcpid|l9explore|fasthttp|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|curl|wget|python|nikto|scan|java) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block malicious referers
