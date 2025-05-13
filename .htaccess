@@ -11,8 +11,8 @@ RewriteCond %{REQUEST_METHOD} ^(TRACE|DELETE|TRACK) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block suspicious user agents
-RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
-RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|l9tcpid|l9explore|fasthttp|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|curl|wget|python|nikto|scan|java) [NC]
+# RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
+RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|l9tcpid|l9explore|fasthttp|phpstorm|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|nikto|scan|java|Custom-AsyncHttpClient) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block malicious referers
@@ -28,18 +28,18 @@ RewriteCond %{REQUEST_URI} (,|;|<|>|/{2,}) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block disovery of files
-RewriteCond %{REQUEST_URI} (\.git|\.svn|\.env|\.aws|info\.php|dev\.php|test\.php|phpinfo\.php|shell\.php|eval-stdin\.php|\.remote|\.sh|\.local|\.vscode|\.sftp|\.ftp) [NC]
+RewriteCond %{REQUEST_URI} (\.git|\.svn|\.env|\.aws|info\.php|\.DS_Store|dev\.php|test\.php|phpinfo\.php|eval-stdin\.php|phpstorm|xmlrpc\.php|shell\.php|\.remote|\.local|\.vscode|\.sftp) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block disovery of other files/dirs
-RewriteCond %{REQUEST_URI} "(phpinfo|_aws|/test|wp-admin|wp-login|/config|/vendor|/storage|composer\.json|/server-status|/phpmyadmin|/admin|/login)" [NC]
+RewriteCond %{REQUEST_URI} "(phpinfo|_aws|/test|wp-admin|wp-login|wp-config|/config|/vendor|/storage|composer\.json|/server-status|/phpmyadmin|/admin)" [NC]
 RewriteRule ^.* - [F,L]
 
 # Block access to backup files and common dev artifacts
 RewriteCond %{REQUEST_URI} (\.bak|\.swp|\.old|\.orig|\.save|\.key) [NC]
 RewriteRule ^.* - [F,L]
 
-# Block SQLi and RFI/LFI in query strings (uncomment for SQLi protection, might interfere with PhpMyAdmin, though)
+# Block SQLi and RFI/LFI in query strings (uncomment for SQLi protection, might interfere with PhpMyAdmin)
 # RewriteCond %{QUERY_STRING} (union|select|insert|declare|drop|update|md5|benchmark|localhost|loopback|127\.0\.0\.1|<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
 # RewriteRule ^.* - [F,L]
 
