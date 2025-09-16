@@ -12,7 +12,7 @@ RewriteRule ^.* - [F,L]
 
 # Block suspicious user agents
 # RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
-RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|l9tcpid|l9explore|fasthttp|phpstorm|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|nikto|scan|java|Custom-AsyncHttpClient) [NC]
+RewriteCond %{HTTP_USER_AGENT} (zgrab|sqlmap|masscan|nmap|getodin|l9tcpid|l9explore|fasthttp|phpstorm|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner|libwww|nikto|scan|java|Custom-AsyncHttpClient) [NC]
 RewriteRule ^.* - [F,L]
 
 # Block malicious referers
@@ -42,5 +42,6 @@ RewriteRule ^.* - [F,L]
 # Block SQLi and RFI/LFI in query strings (uncomment for SQLi protection, might interfere with PhpMyAdmin)
 # RewriteCond %{QUERY_STRING} (union|select|insert|declare|drop|update|md5|benchmark|localhost|loopback|127\.0\.0\.1|<|>|'|%0A|%0D|%27|%3C|%3E|%00) [NC]
 # RewriteRule ^.* - [F,L]
+
 
 
